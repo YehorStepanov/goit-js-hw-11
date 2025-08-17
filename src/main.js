@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', e => {
 
 formElem.addEventListener('submit', e => {
   e.preventDefault();
+  if (e.currentTarget.elements['search-text'].value.trim() == '') {
+    return;
+  }
+  formElem.insertAdjacentHTML;
   clearGallery();
   showLoader();
   getImagesByQuery(e.currentTarget.elements['search-text'].value.trim())
@@ -32,5 +36,13 @@ formElem.addEventListener('submit', e => {
         hideLoader();
       }
     })
-    .catch(e => console.log(e));
+    .catch(e => {
+      hideLoader();
+      iziToast.error({
+        title: 'Error',
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
+      });
+      console.log(e);
+    });
 });
